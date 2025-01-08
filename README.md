@@ -20,7 +20,7 @@ A user-friendly Python wrapper for yt-dlp that makes downloading YouTube videos 
 
 ## Installation
 
-1. download [ytdlp-easy.py]():
+1. download [ytdlp-easy.py](https://github.com/binnichtaktiv/ytdlp-easy/blob/main/ytdlp-easy.py):
 
 2. Install the required dependencies (you can check if yt-dlp and ffmpeg are already installed using `yt-dlp -v` and `ffmpeg -h`):
 
