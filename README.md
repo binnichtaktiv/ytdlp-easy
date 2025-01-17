@@ -28,6 +28,11 @@ A user-friendly Python wrapper for yt-dlp that makes downloading YouTube videos 
 
 - ffmpeg
 
+### [iSH](https://apps.apple.com/us/app/ish-shell/id1436902243) on iOS/iPadOS
+
+1. `apk update && apk upgrade`
+2. `apk add ffmpeg python3 py3-pip`
+3. `pip3 install yt-dlp`
 
 ## Supported Formats
 
