@@ -1,6 +1,6 @@
 # ytdlp-easy
 
-A user-friendly Python wrapper for yt-dlp that makes downloading YouTube videos and audio simple through an interactive interface.
+A user-friendly Python wrapper for yt-dlp that provides an interactive interface to easily download videos and audio from yt-dlp-supported platforms.
 
 ## Features
 
@@ -15,18 +15,15 @@ A user-friendly Python wrapper for yt-dlp that makes downloading YouTube videos 
 ## Prerequisites
 
 - Python 3.x
-- yt-dlp
-- ffmpeg
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+- [ffmpeg](https://ffmpeg.org/)
 
 ## Installation
 
 1. download [ytdlp-easy.py](https://github.com/binnichtaktiv/ytdlp-easy/blob/main/ytdlp-easy.py):
 
-2. Install the required dependencies (you can check if yt-dlp and ffmpeg are already installed using `yt-dlp -v` and `ffmpeg -h`):
+2. Install the required dependencies `yt-dlp` and `ffmpeg`(you can check if yt-dlp and ffmpeg are already installed using `yt-dlp -v` and `ffmpeg -h`):
 
-- yt-dlp
-
-- ffmpeg
 
 ### [iSH](https://apps.apple.com/us/app/ish-shell/id1436902243) on iOS/iPadOS
 
