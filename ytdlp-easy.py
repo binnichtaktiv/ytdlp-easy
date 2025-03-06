@@ -7,14 +7,27 @@ def clearTerminal():
 ytLink = input("enter YouTube link:\n")
 clearTerminal()
 
-vOrA = int(input("what do you want to download?\n[1] video only\n[2] audio only\n[3] video and audio (default):\n"))
+vOrA = int(input("what do you want to download?\n[1] video only\n[2] audio only\n[3] video and audio (default):\n[4] download a specific part of the video\n"))
 clearTerminal()
 
-if vOrA == 1 or vOrA == 3:
-    videoFormat = input("select video format:\n[1] mp4\n[2] webm\n[3] mkv\n[4] avi\n")
+if vOrA == 4:
+    stupidCode = int(input("download the part as\n[1] video\n[2] audio\n"))
+    clearTerminal()
+    if stupidCode == 2:
+        audio, video = True, False
+    else:
+        video, audio = True, True
 
-if vOrA == 2:
+if vOrA in [1, 3] or (vOrA == 4 and video and audio):
+    videoFormat = input("select video format:\n[1] mp4\n[2] webm\n[3] mkv\n[4] avi\n")
+    video = True
+
+if vOrA == 2 or (vOrA == 4 and audio and video == False):
     audioFormat = input("select audio format:\n[1] mp3\n[2] m4a\n[3] wav\n[4] ogg\n[5] flac\n[6] aac\n")
+    audio, video = True, False
+
+if vOrA == 3:
+    audio = True
 
 clearTerminal()
 
@@ -22,8 +35,9 @@ resolution = ["144", "240", "360", "480", "720", "1080", "1440", "2160", "4320"]
 videoFormats = ["mp4", "webm", "mkv", "avi"]
 audioFormats = ["mp3", "m4a", "wav", "ogg", "flac", "aac"]
 
-if vOrA == 1 or vOrA == 3:
+if vOrA in (1, 3) or (vOrA == 4 and video):
     selectedResolution = input("select video resolution you want to download:\n[1] 144p\n[2] 240p\n[3] 360p\n[4] 480p (SD)\n[5] 720p (HD)\n[6] 1080p (Full HD) - default\n[7] 1440p (2K)\n[8] 2160p (4K)\n[9] 4320p (8K) - rarely available\n")
+    selectedResolution = selectedResolution or 6
     clearTerminal()
 
 downloadLocation = int(input(f"select download location:\n[1] current folder - {os.getcwd()}\n[2] different location\n"))
@@ -65,7 +79,7 @@ else:
 
 cmd = f'yt-dlp "{ytLink}" -o "{ouputPath}{os.sep}%(title)s.'
 
-if vOrA == 1 or vOrA == 3:
+if video == True:
     cmd += videoFormats[int(videoFormat)-1] + '" '
 else:
     cmd += audioFormats[int(audioFormat)-1] + '" '
@@ -79,4 +93,26 @@ if vOrA == 2:
 if vOrA == 3:
     cmd += f'-f "bestvideo[height={resolution[int(selectedResolution)-1]}]+bestaudio" --merge-output-format {videoFormats[int(videoFormat)-1]}'
 
+if vOrA == 4:
+    startTime = input("enter part start time in hh:mm:ss\n")
+    endTime = input("\nenter part end time in hh:mm:ss\n")
+    clearTerminal()
+    if video and audio:
+        cmd = f'yt-dlp -f "bestvideo[height={resolution[int(selectedResolution)-1]}]+bestaudio" --merge-output-format {videoFormats[int(videoFormat)-1]} --download-sections "*{startTime}-{endTime}" -o "{ouputPath}{os.sep}%(title)s" "{ytLink}"'
+    else:
+        cmd = f'yt-dlp -f "ba" --download-sections "*{startTime}-{endTime}" -o "{ouputPath}{os.sep}%(title)s.{audioFormats[int(audioFormat)-1]}" "{ytLink}"'     
 subprocess.call(cmd, shell=True)
+
+if vOrA == 4:    
+    while (answer := input("\n\nplease check the downloaded file. does audio and video work? no blackscreen or missing audio?\nif its not downloaded correctly we will try it again with another method\ndo you want to retry? [y/n]\n").lower()) not in ['y', 'n']:
+        print("\ninvalid input. please enter 'y' or 'n'.")
+        clearTerminal()
+
+    if answer == 'y':
+        clearTerminal()
+        input("please delete the incorrectly downloaded file before continuing. after you have deleted it, confirm with enter\n")
+        clearTerminal()
+        cmd = f'yt-dlp -f "bestvideo[height={resolution[int(selectedResolution)-1]}][protocol=https]+bestaudio" --merge-output-format {videoFormats[int(videoFormat)-1]} --download-sections "*{startTime}-{endTime}" -o "{ouputPath}{os.sep}%(title)s" "{ytLink}"'
+        subprocess.call(cmd, shell=True)
+    else:
+        print("file is good and download will not be repeated")
