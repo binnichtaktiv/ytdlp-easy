@@ -7,7 +7,8 @@ def clearTerminal():
 ytLink = input("enter YouTube link:\n")
 clearTerminal()
 
-vOrA = int(input("what do you want to download?\n[1] video only\n[2] audio only\n[3] video and audio (default):\n[4] download a specific part of the video\n"))
+vOrA = input("what do you want to download?\n[1] video only\n[2] audio only\n[3] video and audio (default):\n[4] download a specific part of the video\n")
+vOrA = int(3) if vOrA == "" else int(vOrA)
 clearTerminal()
 
 if vOrA == 4:
